@@ -1,0 +1,7 @@
+CREATE EXTENSION IF NOT EXISTS "citext";
+
+ALTER TABLE usuarios
+ALTER COLUMN email TYPE CITEXT;
+
+ALTER TABLE usuarios
+ADD CONSTRAINT uk_usuarios_email UNIQUE (email);

@@ -1,29 +1,45 @@
 package com.luanferro.reservation_api.domain.service;
 
 import com.luanferro.reservation_api.application.dto.UserRequestDTO;
+import com.luanferro.reservation_api.application.mapper.UserMapper;
+import com.luanferro.reservation_api.domain.enums.UserRole;
 import com.luanferro.reservation_api.domain.model.User;
 import com.luanferro.reservation_api.domain.port.out.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
 
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository repository;
+    private final UserRepository repository;
+    private final PasswordEncoder passwordEncoder;
+    private final UserMapper userMapper;
 
-    public User createUser(UserRequestDTO data) {
 
-        User newUser = new User();
-        newUser.setNome(data.nome());
-        newUser.setEmail(data.email());
-        newUser.setSenha(data.senha());
-        newUser.setRole(data.role());
+    public UserService(UserRepository repository, PasswordEncoder passwordEncoder, UserMapper userMapper) {
+        this.repository = repository;
+        this.passwordEncoder = passwordEncoder;
+        this.userMapper = userMapper;
+    }
 
-        repository.save(newUser);
+    public User createUser(UserRequestDTO data) throws Exception {
 
-        return newUser;
+        validateEmailNotExists(data.email());
 
+        User user = userMapper.toEntity(data);
+        user.setSenha(passwordEncoder.encode(data.senha()));
+
+        return repository.save(user);
+    }
+
+    private void validateEmailNotExists(String email) {
+        if (repository.findByEmail(email).isPresent()) {
+            throw new RuntimeException("E-mail already exists");
+        }
     }
 
 }

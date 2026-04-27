@@ -5,3 +5,16 @@ spring:
     url: jdbc:postgresql://localhost:5432/reservationapi
     username: postgres
     password: Luan@2204
+
+server:
+  servlet:
+    context-path: /reservation/v1
+
+api:
+  security:
+    token:
+      secret: ${JWT_SECRET:my-secret-key}
+
+logging:
+  level:
+    org.springframework.security: DEBUG
