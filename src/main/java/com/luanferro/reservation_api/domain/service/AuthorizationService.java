@@ -2,6 +2,7 @@ package com.luanferro.reservation_api.domain.service;
 
 import com.luanferro.reservation_api.adapters.in.security.UserDetailsImpl;
 import com.luanferro.reservation_api.domain.port.out.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.internal.metadata.PredefinedScopeBeanMetaDataManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,10 +11,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class AuthorizationService implements UserDetailsService {
 
-    @Autowired
-    private UserRepository repository;
+    private final UserRepository repository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

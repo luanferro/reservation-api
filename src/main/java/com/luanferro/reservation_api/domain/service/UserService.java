@@ -5,6 +5,7 @@ import com.luanferro.reservation_api.application.mapper.UserMapper;
 import com.luanferro.reservation_api.domain.enums.UserRole;
 import com.luanferro.reservation_api.domain.model.User;
 import com.luanferro.reservation_api.domain.port.out.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,18 +14,12 @@ import org.springframework.stereotype.Service;
 import java.util.Objects;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
-
-
-    public UserService(UserRepository repository, PasswordEncoder passwordEncoder, UserMapper userMapper) {
-        this.repository = repository;
-        this.passwordEncoder = passwordEncoder;
-        this.userMapper = userMapper;
-    }
 
     public User createUser(UserRequestDTO data) throws Exception {
 
