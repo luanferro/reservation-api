@@ -1,13 +1,11 @@
 package com.luanferro.reservation_api.adapters.in.web;
 
 import com.luanferro.reservation_api.adapters.in.security.UserDetailsImpl;
-import com.luanferro.reservation_api.application.dto.AuthenticationDTO;
-import com.luanferro.reservation_api.application.dto.LoginResponseDTO;
-import com.luanferro.reservation_api.config.security.TokenService;
-import com.luanferro.reservation_api.domain.model.User;
+import com.luanferro.reservation_api.application.dto.request.LoginRequest;
+import com.luanferro.reservation_api.application.dto.response.LoginResponse;
+import com.luanferro.reservation_api.config.security.TokenServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,16 +20,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController {
 
     private final AuthenticationManager authenticationManager;
-    private final TokenService tokenService;
+    private final TokenServiceImpl tokenServiceImpl;
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid AuthenticationDTO data) {
+    public ResponseEntity<LoginResponse> login(@RequestBody @Valid LoginRequest data) {
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.senha());
         var auth = this.authenticationManager.authenticate(usernamePassword);
 
         var userDetails = (UserDetailsImpl) auth.getPrincipal();
-        var token = tokenService.generateToken(userDetails.getUsername());
+        var token = tokenServiceImpl.generateToken(userDetails.getUsername());
 
-        return ResponseEntity.ok(new LoginResponseDTO(token));
+        return ResponseEntity.ok(new LoginResponse(token));
     }
 }

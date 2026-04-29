@@ -5,6 +5,9 @@ spring:
     url: jdbc:postgresql://localhost:5432/reservationapi
     username: postgres
     password: Luan@2204
+  jackson:
+    mapper:
+      accept-case-insensitive-enums: true
 
 server:
   servlet:
