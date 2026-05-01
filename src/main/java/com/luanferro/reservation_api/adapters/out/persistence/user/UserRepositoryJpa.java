@@ -1,4 +1,4 @@
-package com.luanferro.reservation_api.adapters.out.persistence;
+package com.luanferro.reservation_api.adapters.out.persistence.user;
 
 import com.luanferro.reservation_api.domain.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;

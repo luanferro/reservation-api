@@ -1,4 +1,4 @@
-package com.luanferro.reservation_api.adapters.out.persistence;
+package com.luanferro.reservation_api.adapters.out.persistence.user;
 
 import com.luanferro.reservation_api.domain.model.User;
 import com.luanferro.reservation_api.domain.port.out.UserRepository;
@@ -11,7 +11,6 @@ import java.util.Optional;
 public class UserRepositoryImpl implements UserRepository {
 
     private final UserRepositoryJpa jpaRepository;
-
 
     @Override
     public User save(User user) {
