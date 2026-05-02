@@ -3,7 +3,6 @@ package com.luanferro.reservation_api.application.usecase.reservation;
 import com.luanferro.reservation_api.adapters.in.security.SecurityContext;
 import com.luanferro.reservation_api.application.dto.request.ReservationRequest;
 import com.luanferro.reservation_api.application.mapper.ReservationMapper;
-import com.luanferro.reservation_api.application.mapper.RestaurantTableMapper;
 import com.luanferro.reservation_api.domain.model.Reservation;
 import com.luanferro.reservation_api.domain.model.RestaurantTable;
 import com.luanferro.reservation_api.domain.model.User;
@@ -12,8 +11,6 @@ import com.luanferro.reservation_api.domain.port.out.RestaurantTableRepository;
 import com.luanferro.reservation_api.domain.port.out.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
