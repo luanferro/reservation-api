@@ -34,7 +34,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST,
                                 "/auth/login",
-                                "/user",
+                                "/auth/register",
                                 "/error").permitAll()
                         .requestMatchers(HttpMethod.POST,
                                 "/table").hasRole("ADMIN")

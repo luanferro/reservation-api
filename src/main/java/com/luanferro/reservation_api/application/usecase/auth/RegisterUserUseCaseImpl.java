@@ -1,4 +1,4 @@
-package com.luanferro.reservation_api.application.usecase.user;
+package com.luanferro.reservation_api.application.usecase.auth;
 
 import com.luanferro.reservation_api.application.dto.request.UserRequest;
 import com.luanferro.reservation_api.application.mapper.UserMapper;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class CreateUserUseCaseImpl implements CreateUserUseCase{
+public class RegisterUserUseCaseImpl implements RegisterUserUseCase {
 
     private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
