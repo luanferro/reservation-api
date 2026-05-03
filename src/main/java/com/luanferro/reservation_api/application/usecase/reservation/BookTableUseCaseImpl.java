@@ -3,6 +3,7 @@ package com.luanferro.reservation_api.application.usecase.reservation;
 import com.luanferro.reservation_api.adapters.in.security.SecurityContext;
 import com.luanferro.reservation_api.application.dto.request.ReservationRequest;
 import com.luanferro.reservation_api.application.mapper.ReservationMapper;
+import com.luanferro.reservation_api.domain.enums.StatusTable;
 import com.luanferro.reservation_api.domain.model.Reservation;
 import com.luanferro.reservation_api.domain.model.RestaurantTable;
 import com.luanferro.reservation_api.domain.model.User;
@@ -29,6 +30,10 @@ public class BookTableUseCaseImpl implements BookTableUseCase{
 
         RestaurantTable table = restaurantTableRepository.findById(request.table())
                 .orElseThrow(() -> new RuntimeException("Not Found Table"));
+
+        if(reservationRepository.existsByTableIdAndDate(request.table(), request.date())){
+            throw new RuntimeException("Não foi possivel realizar a reserva. Mesa não disponivel para esta data");
+        }
 
         Reservation reservation = mapper.toEntity(request);
         reservation.setTable(table);
