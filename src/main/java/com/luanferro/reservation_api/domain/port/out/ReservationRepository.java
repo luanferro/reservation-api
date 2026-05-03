@@ -4,6 +4,7 @@ import com.luanferro.reservation_api.domain.model.Reservation;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface ReservationRepository {
@@ -11,4 +12,5 @@ public interface ReservationRepository {
     List<Reservation> findAll();
     List<Reservation> findByDate(LocalDateTime date);
     boolean existsByTableIdAndDate(UUID tableId, LocalDateTime date);
+    Optional<Reservation> findById(UUID reservationId);
 }

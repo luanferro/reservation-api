@@ -28,10 +28,10 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/error").permitAll()
                         .requestMatchers(HttpMethod.POST,
                                 "/auth/login",
-                                "/user",
-                                "/error").permitAll()
+                                "/user").permitAll()
                         .requestMatchers(HttpMethod.POST,
                                 "/table").hasRole("ADMIN")
                         .anyRequest().authenticated()

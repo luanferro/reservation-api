@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -33,5 +34,10 @@ public class ReservationRepositoryImpl implements ReservationRepository {
     @Override
     public boolean existsByTableIdAndDate(UUID tableId, LocalDateTime date) {
         return reservationRepositoryJpa.existsByTableIdAndDate(tableId, date);
+    }
+
+    @Override
+    public Optional<Reservation> findById(UUID reservationId) {
+        return reservationRepositoryJpa.findById(reservationId);
     }
 }
