@@ -4,9 +4,12 @@ import com.luanferro.reservation_api.domain.enums.StatusTable;
 import com.luanferro.reservation_api.domain.model.RestaurantTable;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 public interface RestaurantTableRepository {
     List<RestaurantTable> findAll();
     RestaurantTable save(RestaurantTable table);
     List<RestaurantTable> findByStatus(StatusTable status);
+    Optional<RestaurantTable> findById(UUID id);
 }

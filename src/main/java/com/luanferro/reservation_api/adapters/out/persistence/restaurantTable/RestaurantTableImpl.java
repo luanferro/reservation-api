@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 @RequiredArgsConstructor
@@ -27,5 +29,10 @@ public class RestaurantTableImpl implements RestaurantTableRepository {
     @Override
     public List<RestaurantTable> findByStatus(StatusTable status) {
         return restaurantTableJpa.findByStatus(status);
+    }
+
+    @Override
+    public Optional<RestaurantTable> findById(UUID id) {
+        return restaurantTableJpa.findById(id);
     }
 }
