@@ -3,15 +3,17 @@ package com.luanferro.reservation_api.application.usecase.reservation;
 import com.luanferro.reservation_api.adapters.in.security.SecurityContext;
 import com.luanferro.reservation_api.application.dto.request.ReservationRequest;
 import com.luanferro.reservation_api.application.mapper.ReservationMapper;
+import com.luanferro.reservation_api.application.usecase.restaurantTable.FindRestaurantTableUseCase;
+import com.luanferro.reservation_api.application.usecase.restaurantTable.UpdateTableStatusUseCase;
+import com.luanferro.reservation_api.application.usecase.user.FindUserUseCase;
+import com.luanferro.reservation_api.domain.enums.StatusReservation;
 import com.luanferro.reservation_api.domain.enums.StatusTable;
 import com.luanferro.reservation_api.domain.exception.BusinessException;
-import com.luanferro.reservation_api.domain.exception.NotFoundException;
 import com.luanferro.reservation_api.domain.model.Reservation;
 import com.luanferro.reservation_api.domain.model.RestaurantTable;
 import com.luanferro.reservation_api.domain.model.User;
 import com.luanferro.reservation_api.domain.port.out.ReservationRepository;
-import com.luanferro.reservation_api.domain.port.out.RestaurantTableRepository;
-import com.luanferro.reservation_api.domain.port.out.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,10 +23,12 @@ public class BookTableUseCaseImpl implements BookTableUseCase{
 
     private final ReservationMapper mapper;
     private final ReservationRepository reservationRepository;
-    private final RestaurantTableRepository restaurantTableRepository;
-    private final UserRepository userRepository;
+    private final FindRestaurantTableUseCase findRestaurantTableUseCase;
+    private final UpdateTableStatusUseCase updateTableStatusUseCase;
+    private final FindUserUseCase findUserUseCase;
     private final SecurityContext securityContext;
 
+    @Transactional
     @Override
     public Reservation book(ReservationRequest request) {
 
@@ -32,19 +36,22 @@ public class BookTableUseCaseImpl implements BookTableUseCase{
             throw new BusinessException("Não foi possivel realizar a reserva. Mesa não disponivel para esta data: " + request.date());
         }
 
-        RestaurantTable table = restaurantTableRepository.findById(request.table())
-                .orElseThrow(() -> new NotFoundException("Table not found"));
+        RestaurantTable table = findRestaurantTableUseCase.findById(request.table());
 
-        String userSubject = securityContext.getCurrentUserSubject();
+        if(table.getStatus() != StatusTable.DISPONIVEL) {
+            throw new BusinessException("Mesa não disponivel para reserva");
+        }
 
-        User user = userRepository.findByEmail(userSubject)
-                .orElseThrow(() -> new NotFoundException("User not found " + userSubject));
+        User user = findUserUseCase.findByEmail(securityContext.getCurrentUserSubject());
 
         Reservation reservation = mapper.toEntity(request);
         reservation.setTable(table);
         reservation.setUser(user);
-        reservation.setReserved(true);
+        reservation.setStatus(StatusReservation.ATIVO);
 
-        return reservationRepository.save(reservation);
+        reservationRepository.save(reservation);
+        updateTableStatusUseCase.updateStatus(request.table(), StatusTable.RESERVADA);
+
+        return reservation;
     }
 }
