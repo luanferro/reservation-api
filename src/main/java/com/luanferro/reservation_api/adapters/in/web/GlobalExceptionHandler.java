@@ -4,14 +4,14 @@ import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.luanferro.reservation_api.adapters.in.web.dto.ErrorResponse;
 import com.luanferro.reservation_api.domain.exception.BusinessException;
 import com.luanferro.reservation_api.domain.exception.NotFoundException;
+import com.luanferro.reservation_api.domain.exception.TokenGenerationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
-import java.nio.file.AccessDeniedException;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
@@ -78,4 +78,12 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(ErrorResponse.of("Erro interno no servidor", 500));
     }
+
+    @ExceptionHandler(TokenGenerationException.class)
+    public ResponseEntity<ErrorResponse> handleTokenGeneration(TokenGenerationException ex) {
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(ErrorResponse.of("Erro ao gerar o token", 500));
+    }
+
 }

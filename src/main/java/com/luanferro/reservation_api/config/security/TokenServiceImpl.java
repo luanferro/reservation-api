@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.luanferro.reservation_api.domain.exception.TokenGenerationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +29,7 @@ public class TokenServiceImpl {
 
             return token;
         } catch (JWTCreationException exception) {
-            throw new RuntimeException("Erro while generation token", exception);
+            throw new TokenGenerationException(exception);
         }
     }
 
