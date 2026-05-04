@@ -4,7 +4,7 @@ import com.luanferro.reservation_api.application.dto.request.RestaurantTableRequ
 import com.luanferro.reservation_api.application.dto.response.RestaurantTableResponse;
 import com.luanferro.reservation_api.application.mapper.RestaurantTableMapper;
 import com.luanferro.reservation_api.application.usecase.restaurantTable.CreateRestaurantTableUseCase;
-import com.luanferro.reservation_api.application.usecase.restaurantTable.FindAllRestaurantTableUseCase;
+import com.luanferro.reservation_api.application.usecase.restaurantTable.FindRestaurantTableUseCase;
 import com.luanferro.reservation_api.domain.model.RestaurantTable;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ import java.util.List;
 public class RestaurantTableController {
 
     private final CreateRestaurantTableUseCase createRestaurantTableUseCase;
-    private final FindAllRestaurantTableUseCase findAllRestaurantTableUseCase;
+    private final FindRestaurantTableUseCase findAllRestaurantTableUseCase;
     private final RestaurantTableMapper mapper;
 
     @PostMapping

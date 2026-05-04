@@ -1,5 +1,6 @@
 package com.luanferro.reservation_api.domain.model;
 
+import com.luanferro.reservation_api.domain.enums.StatusReservation;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,5 +30,5 @@ public class Reservation {
     private RestaurantTable table;
 
     private LocalDateTime date;
-    private boolean reserved;
+    private StatusReservation status;
 }
