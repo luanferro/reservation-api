@@ -3,7 +3,7 @@ CREATE TABLE reservations (
     user_id UUID NOT NULL,
     table_id UUID NOT NULL,
     date TIMESTAMP NOT NULL,
-    reserved BOOLEAN NOT NULL DEFAULT FALSE,
+    status VARCHAR(50) NOT NULL,
 
     CONSTRAINT fk_reservations_user FOREIGN KEY (user_id) REFERENCES usuarios(id),
     CONSTRAINT fk_reservations_table FOREIGN KEY (table_id) REFERENCES restaurant_table(id)
