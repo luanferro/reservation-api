@@ -30,5 +30,7 @@ public class Reservation {
     private RestaurantTable table;
 
     private LocalDateTime date;
+
+    @Enumerated(EnumType.STRING)
     private StatusReservation status;
 }

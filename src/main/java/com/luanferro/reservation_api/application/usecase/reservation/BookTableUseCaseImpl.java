@@ -42,6 +42,10 @@ public class BookTableUseCaseImpl implements BookTableUseCase{
             throw new BusinessException("Mesa não disponivel para reserva");
         }
 
+        if(table.getCapacidade() < request.peopleQuantity()) {
+            throw new BusinessException("A capacidade da mesa nao suporta quantidade de pessoas " + request.peopleQuantity());
+        }
+
         User user = findUserUseCase.findByEmail(securityContext.getCurrentUserSubject());
 
         Reservation reservation = mapper.toEntity(request);
