@@ -5,6 +5,7 @@ import com.luanferro.reservation_api.domain.port.out.ReservationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -27,13 +28,13 @@ public class ReservationRepositoryImpl implements ReservationRepository {
     }
 
     @Override
-    public List<Reservation> findByDate(LocalDateTime date) {
-        return reservationRepositoryJpa.findByDate(date);
+    public List<Reservation> findByStartDate(LocalDateTime date) {
+        return reservationRepositoryJpa.findByStartDate(date);
     }
 
     @Override
-    public boolean existsByTableIdAndDate(UUID tableId, LocalDateTime date) {
-        return reservationRepositoryJpa.existsByTableIdAndDate(tableId, date);
+    public boolean existsConflict(UUID tableId, LocalDateTime dataInicio, LocalDateTime dataFim) {
+        return reservationRepositoryJpa.existsConflict(tableId, dataInicio, dataFim);
     }
 
     @Override
