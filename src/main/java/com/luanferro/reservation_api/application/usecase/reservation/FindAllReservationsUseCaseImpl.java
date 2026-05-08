@@ -18,7 +18,7 @@ public class FindAllReservationsUseCaseImpl implements FindAllReservationsUseCas
     public List<Reservation> findAll(LocalDateTime date) {
 
         if(date != null) {
-            return reservationRepository.findByDate(date);
+            return reservationRepository.findByStartDate(date);
         }
 
         return reservationRepository.findAll();
