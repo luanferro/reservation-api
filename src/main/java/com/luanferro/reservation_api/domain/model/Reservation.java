@@ -29,7 +29,8 @@ public class Reservation {
     @JoinColumn(name = "table_id", nullable = false)
     private RestaurantTable table;
 
-    private LocalDateTime date;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
 
     @Enumerated(EnumType.STRING)
     private StatusReservation status;

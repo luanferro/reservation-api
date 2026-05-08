@@ -4,5 +4,5 @@ import com.luanferro.reservation_api.domain.enums.StatusReservation;
 
 import java.util.UUID;
 
-public record ReservationSummaryResponse(UUID id, RestaurantTableResponse table, String date, StatusReservation status) {
+public record ReservationSummaryResponse(UUID id, RestaurantTableResponse table, String startDate, StatusReservation status) {
 }

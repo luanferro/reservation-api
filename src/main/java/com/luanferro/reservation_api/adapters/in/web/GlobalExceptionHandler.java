@@ -3,6 +3,7 @@ package com.luanferro.reservation_api.adapters.in.web;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.luanferro.reservation_api.adapters.in.web.dto.ErrorResponse;
 import com.luanferro.reservation_api.domain.exception.BusinessException;
+import com.luanferro.reservation_api.domain.exception.ConflictException;
 import com.luanferro.reservation_api.domain.exception.NotFoundException;
 import com.luanferro.reservation_api.domain.exception.TokenGenerationException;
 import org.springframework.http.HttpStatus;
@@ -84,6 +85,13 @@ public class GlobalExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(ErrorResponse.of("Erro ao gerar o token", 500));
+    }
+
+    @ExceptionHandler(ConflictException.class)
+    public ResponseEntity<ErrorResponse> handleConflict(ConflictException ex) {
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(ErrorResponse.of("Mesa indisponível para o horário solicitado", 409));
     }
 
 }
