@@ -2,9 +2,9 @@ spring:
   application:
     name: reservation-api
   datasource:
-    url: jdbc:postgresql://localhost:5432/reservationapi
-    username: postgres
-    password: Luan@2204
+    url: ${DATABASE_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
   jackson:
     mapper:
       accept-case-insensitive-enums: true
@@ -16,7 +16,7 @@ server:
 api:
   security:
     token:
-      secret: ${JWT_SECRET:my-secret-key}
+      secret: ${JWT_SECRET}
 
 logging:
   level:
