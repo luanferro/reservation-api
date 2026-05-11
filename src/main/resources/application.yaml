@@ -1,6 +1,17 @@
 spring:
   application:
-    name: reservation-api
+    name: reservation-api\
+  flyway:
+    enabled: true
+    schemas: reservation_app
+    default-schema: reservation_app
+    baseline-on-migrate: true
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        default_schema: reservation_app
   datasource:
     url: ${DATABASE_URL}
     username: ${DB_USER}
@@ -8,8 +19,11 @@ spring:
   jackson:
     mapper:
       accept-case-insensitive-enums: true
+  profiles:
+    active: dev
 
 server:
+  port: ${PORT:8080}
   servlet:
     context-path: /reservation/v1
 
