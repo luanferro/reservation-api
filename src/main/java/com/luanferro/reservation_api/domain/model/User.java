@@ -21,7 +21,10 @@ public class User{
     private UUID id;
 
     private String nome;
+
+    @Column(columnDefinition = "citext")
     private String email;
+
     private String senha;
 
     @Enumerated(EnumType.STRING)
