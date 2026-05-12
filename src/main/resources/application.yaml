@@ -1,6 +1,6 @@
 spring:
   application:
-    name: reservation-api\
+    name: reservation-api
   flyway:
     enabled: true
     schemas: reservation_app
@@ -32,6 +32,15 @@ api:
     token:
       secret: ${JWT_SECRET}
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
+
 logging:
   level:
-    org.springframework.security: DEBUG
+    org.springframework.security: WARN
