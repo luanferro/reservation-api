@@ -1,3 +1,46 @@
 spring:
   application:
     name: reservation-api
+  flyway:
+    enabled: true
+    schemas: reservation_app
+    default-schema: reservation_app
+    baseline-on-migrate: true
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        default_schema: reservation_app
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+  jackson:
+    mapper:
+      accept-case-insensitive-enums: true
+  profiles:
+    active: dev
+
+server:
+  port: ${PORT:8080}
+  servlet:
+    context-path: /reservation/v1
+
+api:
+  security:
+    token:
+      secret: ${JWT_SECRET}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
+
+logging:
+  level:
+    org.springframework.security: WARN
