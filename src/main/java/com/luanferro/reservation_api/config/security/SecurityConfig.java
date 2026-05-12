@@ -43,6 +43,9 @@ public class SecurityConfig {
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**"
                         ).permitAll()
+                        .requestMatchers(
+                                "/actuator/health"
+                        ).permitAll()
                         .requestMatchers(HttpMethod.POST,
                                 "/table").hasRole("ADMIN")
                         .anyRequest().authenticated()
